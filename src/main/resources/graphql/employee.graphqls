@@ -9,7 +9,7 @@ type Employee {
     dateOfBirth: String!
     city: String!
     salary: number!
-    gender: String!
+    gender: String
     email: String
 }
 
