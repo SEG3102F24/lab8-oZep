@@ -30,7 +30,7 @@ class EmployeesResolver ( val mongoOperations: MongoOperations,
     }
 
     @MutationMapping
-    fun newEmployee(@Argument("createEmployeeInput") input: CreateEmployeeInput) : Employee {
+    fun newEmployee(@Argument("CreateEmployeeInput") input: CreateEmployeeInput) : Employee {
         if (input.name != null &&
                 input.dateOfBirth != null &&
                 input.city != null && input.salary != null) {
