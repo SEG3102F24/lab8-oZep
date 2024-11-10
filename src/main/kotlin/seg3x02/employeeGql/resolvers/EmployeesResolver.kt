@@ -1,7 +1,7 @@
 package seg3x02.employeeGql.resolvers
 
 import org.springframework.stereotype.Controller
-import seg3x02.employeeGql.repositories.EmployeeRepository
+import seg3x02.employeeGql.repository.EmployeesRepository
 import org.springframework.data.mongodb.core.MongoOperations
 import seg3x02.employeeGql.entity.Employee
 import seg3x02.employeeGql.resolvers.types.CreateEmployeeInput
@@ -12,11 +12,12 @@ import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
 
+import java.util.UUID
+
 @Controller
-class EmployeesResolver {
-    private val employeeRepository: EmployeeRepository,
-    private val mongoOperations: MongoOperations
-} {
+class EmployeesResolver ( val mongoOperations: MongoOperations,
+    private val employeeRepository: EmployeesRepository
+ ) {
     @QueryMapping
     fun employee(): List<Employee> {
         return employeeRepository.findAll()
@@ -24,7 +25,7 @@ class EmployeesResolver {
 
     @QueryMapping
     fun EmployeeById(@Argument employeeId: String): Employee? {
-        val employee = EmployeeRepository.findById(EmployeeId)
+        val employee = employeeRepository.findById(employeeId)
         return employee.orElse(null)
     }
 
@@ -34,8 +35,8 @@ class EmployeesResolver {
                 input.dateOfBirth != null &&
                 input.city != null && input.salary != null) {
             val employee = Employee(input.name, input.dateOfBirth, input.city, input.salary, input.gender, input.email)
-            employee.employeeId = UUID.randomUUID().toString()
-            employeeRepository.save(Employee)
+            employee.id = UUID.randomUUID().toString()
+            employeeRepository.save(employee)
             return employee
         } else {
             throw Exception("Invalid input")
