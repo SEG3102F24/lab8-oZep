@@ -1,10 +1,10 @@
 type Query {
-    employee: [Employee]
+    employees: [Employee]
     employeeById(employeeId: ID!): Employee
 }
 
 type Employee {
-    employeeId: String
+    id: String
     name: String!
     dateOfBirth: String!
     city: String!
@@ -23,5 +23,5 @@ input CreateEmployeeInput {
 }
 
 type Mutation {
-    newEmployee(CreateEmployeeInput: CreateEmployeeInput!) : Employee!
+    newEmployee(createEmployeeInput: CreateEmployeeInput!) : Employee!
 }

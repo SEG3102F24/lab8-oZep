@@ -19,7 +19,7 @@ class EmployeesResolver ( val mongoOperations: MongoOperations,
     private val employeeRepository: EmployeesRepository
  ) {
     @QueryMapping
-    fun employee(): List<Employee> {
+    fun employees(): List<Employee> {
         return employeeRepository.findAll()
     }
 
@@ -30,7 +30,7 @@ class EmployeesResolver ( val mongoOperations: MongoOperations,
     }
 
     @MutationMapping
-    fun newEmployee(@Argument("CreateEmployeeInput") input: CreateEmployeeInput) : Employee {
+    fun newEmployee(@Argument("createEmployeeInput") input: CreateEmployeeInput) : Employee {
         if (input.name != null &&
                 input.dateOfBirth != null &&
                 input.city != null && input.salary != null) {
